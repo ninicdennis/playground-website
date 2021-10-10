@@ -3,21 +3,30 @@ import ContentWrapper from '../../commonComponents/contentWrapper';
 import { ReactElement, useState } from 'react';
 import AuthApi from '../../api/auth';
 import { errorToast, successToast } from '../../helpers/toast/toast';
+import userStore from '../../helpers/stores/userStore';
 
 const RegisterScreen = (): ReactElement => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [username, setUsername] = useState('');
+	const [, actions] = userStore();
 
 	const register = async () => {
-		await AuthApi.register(email, password, username).then((res) => {
-			if (res.error) {
-				errorToast(res.message);
-			} else {
-				// Do magic here!
-				successToast('Signed up! Redirecting...');
-			}
-		});
+		if (password.length === 0) {
+			errorToast('Please enter a password!');
+		} else if (username.length < 4) {
+			errorToast('Please enter a valid username!');
+		} else {
+			await AuthApi.register(email, password, username).then((res) => {
+				if (res.error) {
+					errorToast(res.message);
+				} else {
+					// Do magic here!
+					successToast('Signed up! Redirecting...');
+					actions.setUser(res.user);
+				}
+			});
+		}
 	};
 	return (
 		<ContentWrapper>

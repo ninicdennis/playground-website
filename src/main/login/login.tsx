@@ -4,18 +4,26 @@ import { ReactElement, useState } from 'react';
 import AuthApi from '../../api/auth';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorToast, successToast } from '../../helpers/toast/toast';
+import userStore from '../../helpers/stores/userStore';
+
 const LoginScreen = (): ReactElement => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [, actions] = userStore();
 
 	const login = async () => {
-		await AuthApi.login(email, password).then((res) => {
-			if (res.error) {
-				errorToast(res.message);
-			} else {
-				successToast('Logged in!');
-			}
-		});
+		if (password.length === 0) {
+			errorToast('Please enter a password!');
+		} else {
+			await AuthApi.login(email, password).then((res) => {
+				if (res.error) {
+					errorToast(res.message);
+				} else {
+					successToast('Logged in!');
+					actions.setUser(res.user);
+				}
+			});
+		}
 	};
 	return (
 		<ContentWrapper>
