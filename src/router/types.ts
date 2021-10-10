@@ -4,6 +4,7 @@ export type RouteType = {
 	name: string;
 	path: string;
 	component: FunctionComponent;
+	isAuth: boolean;
 	subRoutes?: {
 		name: string;
 		path: string;
@@ -15,6 +16,7 @@ export type MainRouteType = {
 	name: string;
 	path: string;
 	component: FunctionComponent;
+	isAuth: boolean;
 	subRoutes?: {
 		name: string;
 		path: string;

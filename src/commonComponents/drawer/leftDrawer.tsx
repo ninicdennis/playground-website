@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 
-import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import { Drawer, Typography, List, ListItem, Button, Grid } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
-import ListItem from '@material-ui/core/ListItem';
 import mainRoutes from '../../router/mainRoutes';
+import AuthApi from '../../api/auth';
+import { errorToast, infoToast } from '../../helpers/toast/toast';
+import userStore from '../../helpers/stores/userStore';
 
 interface ToggleHook {
 	toggleMenu: boolean;
@@ -39,6 +39,35 @@ const useStyles = makeStyles({
 const LeftDrawerer = (props: ToggleHook): ReactElement => {
 	const { toggleMenu, setToggleMenu } = props;
 	const classes = useStyles();
+	const user = AuthApi.checkUserContext();
+	const [, actions] = userStore();
+
+	const navLinkCheck = (route: any) => {
+		if (user && route.isAuth) {
+			return (
+				<NavLink to={route.path} className={classes.link}>
+					<Typography color='textPrimary'>{route.name}</Typography>
+				</NavLink>
+			);
+		} else if (!user && !route.isAuth) {
+			return (
+				<NavLink to={route.path} className={classes.link}>
+					<Typography color='textPrimary'>{route.name}</Typography>
+				</NavLink>
+			);
+		}
+	};
+
+	const signOut = async () => {
+		await AuthApi.signOut().then((res) => {
+			if (res.error) {
+				errorToast('Something went wrong. Please try again.');
+			} else {
+				infoToast('See ya later!');
+				actions.setUser(null);
+			}
+		});
+	};
 
 	return (
 		<React.Fragment>
@@ -48,12 +77,16 @@ const LeftDrawerer = (props: ToggleHook): ReactElement => {
 						Test Site
 					</Typography>
 					<hr className={classes.linebreak} />
-
+					<Grid container spacing={0} direction='column' alignItems='center' justifyContent='center'>
+						{user && (
+							<Button variant='contained' color='primary' onClick={signOut}>
+								Sign Out
+							</Button>
+						)}
+					</Grid>
 					{mainRoutes.map((route, i) => (
 						<ListItem key={i} button style={{ padding: 0 }}>
-							<NavLink to={route.path} className={classes.link}>
-								<Typography color='textPrimary'>{route.name}</Typography>
-							</NavLink>
+							{navLinkCheck(route)}
 						</ListItem>
 					))}
 				</List>
