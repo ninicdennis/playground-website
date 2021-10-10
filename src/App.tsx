@@ -20,13 +20,14 @@ const App = (): ReactElement => {
 			infoToast('Welcome back!');
 			actions.setUser(user);
 		}
-	}, []);
+	}, [actions]);
 
 	return (
 		<>
 			<Router>
-				<BaseStructure />
-				<RouterConfig />
+				<BaseStructure>
+					<RouterConfig />
+				</BaseStructure>
 			</Router>
 		</>
 	);

@@ -44,7 +44,7 @@ const LoginScreen = (): ReactElement => {
 							id='email-id'
 							label='Email'
 							variant='outlined'
-							color='secondary'
+							color='primary'
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>

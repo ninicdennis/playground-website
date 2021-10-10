@@ -79,9 +79,11 @@ const LeftDrawerer = (props: ToggleHook): ReactElement => {
 		<React.Fragment>
 			<Drawer anchor={'left'} open={toggleMenu} onClose={() => setToggleMenu(!toggleMenu)}>
 				<List className={classes.list}>
-					<Typography variant='h6' className={classes.title}>
-						Test Site
-					</Typography>
+					<NavLink to='/' className={classes.link}>
+						<Typography variant='h6' className={classes.title} color='textPrimary'>
+							Test Site
+						</Typography>
+					</NavLink>
 					<hr className={classes.linebreak} />
 					<Grid container spacing={0} direction='column' alignItems='center' justifyContent='center'>
 						{user && (

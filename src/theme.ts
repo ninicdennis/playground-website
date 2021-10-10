@@ -3,6 +3,9 @@ import common from '@material-ui/core/colors/common';
 import lightBlue from '@material-ui/core/colors/lightBlue';
 export const light: ThemeOptions = {
 	palette: {
+		background: {
+			default: '#FAF9F6',
+		},
 		type: 'light',
 		primary: {
 			main: lightBlue[500],
@@ -17,6 +20,9 @@ export const light: ThemeOptions = {
 };
 export const dark: ThemeOptions = {
 	palette: {
+		background: {
+			default: '#303030',
+		},
 		type: 'dark',
 		primary: {
 			main: lightBlue[500],

@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	title: {
 		flexGrow: 1,
+	},
+	link: {
+		textDecoration: 'none',
+		width: '100%',
+		display: 'inline-block',
+		padding: 10,
 	},
 }));
 
@@ -45,9 +52,11 @@ const Header = (props: ThemeHook): ReactElement => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant='h6' className={classes.title} color='secondary'>
-						Test Site
-					</Typography>
+					<NavLink to='/' className={classes.link}>
+						<Typography variant='h6' className={classes.title} color='secondary'>
+							Test Site
+						</Typography>
+					</NavLink>
 					<Switch onChange={() => setToggleTheme(!toggleTheme)} />
 					{toggleTheme ? (
 						<Brightness5Icon style={{ color: '#fff' }} />
