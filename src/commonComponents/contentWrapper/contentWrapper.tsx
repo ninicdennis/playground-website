@@ -1,9 +1,8 @@
 import { Container, Paper } from '@material-ui/core';
-import { ReactElement } from 'react';
-import { JsxElement } from 'typescript';
+import { ReactElement, ReactNode } from 'react';
 
 interface ChildProp {
-	children: JsxElement | ReactElement;
+	children: ReactNode;
 }
 
 const ContentWrapper = ({ children }: ChildProp): ReactElement => {

@@ -1,15 +1,21 @@
-import { CircularProgress, Typography, Grid } from '@material-ui/core';
+import { CircularProgress, Typography, Grid, Button } from '@material-ui/core';
+import { styled } from '@material-ui/styles';
 import ContentWrapper from '../../commonComponents/contentWrapper';
 import { ReactElement, useEffect, useState } from 'react';
 // import userStore from '../../helpers/stores/userStore';
 import AuthApi from '../../api/auth';
-import { errorToast } from '../../helpers/toast/toast';
+import BucketApi from '../../api/bucket';
+import { errorToast, successToast } from '../../helpers/toast/toast';
 
 const ProfileScreen = (): ReactElement => {
 	type LoadingHook = boolean;
 	type UsernameHook = string;
 	type DescriptionHook = string;
 	type TagHook = string;
+
+	interface TargetElement {
+		target: HTMLInputElement;
+	}
 
 	const [loading, setLoading] = useState<LoadingHook>(true);
 	const [username, setUsername] = useState<UsernameHook>('');
@@ -30,6 +36,26 @@ const ProfileScreen = (): ReactElement => {
 			}
 		});
 	}, []);
+
+	const Input = styled('input')({
+		display: 'none',
+	});
+
+	const uploadFile = async (event: TargetElement) => {
+		if (event.target.files && event.target.files !== undefined) {
+			const image = event.target.files[0];
+			await BucketApi.uploadImage(image).then((res) => {
+				const { error, message } = res;
+				if (error && message) {
+					console.log(error, message);
+					errorToast(message);
+				} else {
+					successToast('Updated Profile Image!');
+				}
+			});
+		}
+	};
+
 	return (
 		<ContentWrapper>
 			{loading ? (
@@ -51,6 +77,12 @@ const ProfileScreen = (): ReactElement => {
 					<Typography>Tag: {tag}</Typography>
 					<Typography>Description: {description}</Typography>
 					<Typography>IMAGE GOES SOMEWHERE HERE</Typography>
+					<label htmlFor='contained-button-file'>
+						<Input accept='image/*' id='contained-button-file' multiple type='file' onChange={uploadFile} />
+						<Button variant='contained' component='span'>
+							Upload
+						</Button>
+					</label>
 				</Grid>
 			)}
 		</ContentWrapper>
