@@ -62,7 +62,7 @@ const LoginScreen = (): ReactElement => {
 					</Grid>
 					<Grid item xs={8}>
 						<Button variant='contained' color='primary' onClick={login}>
-							Register
+							Login
 						</Button>
 					</Grid>
 				</Grid>

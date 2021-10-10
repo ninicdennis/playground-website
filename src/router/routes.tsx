@@ -16,13 +16,7 @@ const RouterConfig = (): ReactElement => {
 		} else if (!route.isAuth && user) {
 			return <Redirect to='/' />;
 		} else {
-			return (
-				<Route
-					exact
-					path={route.path}
-					render={(props: any) => <route.component {...props} routes={route.subRoutes} />}
-				/>
-			);
+			return <Route exact path={route.path} render={(props: any) => <route.component {...props} />} />;
 		}
 	};
 

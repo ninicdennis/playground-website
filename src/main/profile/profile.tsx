@@ -1,16 +1,20 @@
 import { CircularProgress, Typography, Grid } from '@material-ui/core';
 import ContentWrapper from '../../commonComponents/contentWrapper';
 import { ReactElement, useEffect, useState } from 'react';
-import userStore from '../../helpers/stores/userStore';
+// import userStore from '../../helpers/stores/userStore';
 import AuthApi from '../../api/auth';
 import { errorToast } from '../../helpers/toast/toast';
 
 const ProfileScreen = (): ReactElement => {
-	const [state] = userStore();
-	const [loading, setLoading] = useState(true);
-	const [username, setUsername] = useState('');
-	const [description, setDescription] = useState('');
-	const [tag, setTag] = useState('');
+	type LoadingHook = boolean;
+	type UsernameHook = string;
+	type DescriptionHook = string;
+	type TagHook = string;
+
+	const [loading, setLoading] = useState<LoadingHook>(true);
+	const [username, setUsername] = useState<UsernameHook>('');
+	const [description, setDescription] = useState<DescriptionHook>('');
+	const [tag, setTag] = useState<TagHook>('');
 	//! This will get moved, as this should be in the api / state management, not here.
 	// ! This is loading every time the drawer button gets pressed, probably should look into...
 	useEffect(() => {

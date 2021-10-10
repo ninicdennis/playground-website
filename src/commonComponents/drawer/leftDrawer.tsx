@@ -13,6 +13,12 @@ interface ToggleHook {
 	setToggleMenu: (isEnabled: boolean) => void;
 }
 
+type RouterProp = {
+	path: string;
+	name: string;
+	isAuth: boolean;
+};
+
 const useStyles = makeStyles({
 	list: {
 		width: 250,
@@ -42,7 +48,7 @@ const LeftDrawerer = (props: ToggleHook): ReactElement => {
 	const user = AuthApi.checkUserContext();
 	const [, actions] = userStore();
 
-	const navLinkCheck = (route: any) => {
+	const navLinkCheck = (route: RouterProp) => {
 		if (user && route.isAuth) {
 			return (
 				<NavLink to={route.path} className={classes.link}>
