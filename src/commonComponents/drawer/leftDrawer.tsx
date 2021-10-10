@@ -70,7 +70,7 @@ const LeftDrawerer = (props: ToggleHook): ReactElement => {
 				errorToast('Something went wrong. Please try again.');
 			} else {
 				infoToast('See ya later!');
-				actions.setUser(null);
+				actions.signOut();
 			}
 		});
 	};

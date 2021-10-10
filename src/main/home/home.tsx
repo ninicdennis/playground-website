@@ -1,13 +1,12 @@
-import { Typography } from '@material-ui/core';
 import ContentWrapper from '../../commonComponents/contentWrapper';
 import { ReactElement } from 'react';
+import userStore from '../../helpers/stores/userStore';
+import ProfileCard from '../../commonComponents/profileCard';
 
 const HomeScreen = (): ReactElement => {
-	return (
-		<ContentWrapper>
-			<Typography>Hello!</Typography>
-		</ContentWrapper>
-	);
+	const [state] = userStore();
+
+	return <ContentWrapper>{state.data !== null && <ProfileCard userdata={state.data} />}</ContentWrapper>;
 };
 
 export default HomeScreen;
