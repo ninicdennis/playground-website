@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import { ReactElement, useState } from 'react';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
+import { dark, light } from './theme';
+import Header from './commonComponents/header';
+import LeftDrawerer from './commonComponents/drawer';
 import './App.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import RouterConfig from './router';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+type ThemeHook = boolean;
+type DrawerHook = boolean;
+
+const App = (): ReactElement => {
+	const [toggleTheme, setToggleTheme] = useState<ThemeHook>(false);
+	const [toggleMenu, setToggleMenu] = useState<DrawerHook>(false);
+	const theme = createTheme(toggleTheme ? light : dark);
+	return (
+		<>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<Router>
+					<Header
+						toggleTheme={toggleTheme}
+						setToggleTheme={setToggleTheme}
+						toggleMenu={toggleMenu}
+						setToggleMenu={setToggleMenu}
+					/>
+					<LeftDrawerer toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
+					<RouterConfig />
+				</Router>
+			</ThemeProvider>
+		</>
+	);
+};
 
 export default App;
