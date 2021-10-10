@@ -46,7 +46,7 @@ const Header = (props: ThemeHook): ReactElement => {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant='h6' className={classes.title} color='secondary'>
-						Stylish Automotive
+						Test Site
 					</Typography>
 					<Switch onChange={() => setToggleTheme(!toggleTheme)} />
 					{toggleTheme ? (

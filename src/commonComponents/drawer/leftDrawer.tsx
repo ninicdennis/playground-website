@@ -45,7 +45,7 @@ const LeftDrawerer = (props: ToggleHook): ReactElement => {
 			<Drawer anchor={'left'} open={toggleMenu} onClose={() => setToggleMenu(!toggleMenu)}>
 				<List className={classes.list}>
 					<Typography variant='h6' className={classes.title}>
-						Stylish Automotive
+						Test Site
 					</Typography>
 					<hr className={classes.linebreak} />
 
